@@ -35,6 +35,13 @@ const logout = () => {
 	logoutBtn.classList.add('d-none')	
 }
 
+const checkAuth = () => {
+	if (JSON.parse(localStorage.getItem('auth'))) {
+		login()
+	}
+}
+
+
 //Обработчики событий
 authBtn.addEventListener('click', openModal);
 
@@ -42,11 +49,27 @@ closeBtns.forEach((btn) => {
 	btn.addEventListener('click', closeModal)
 })
 
-loginBtn.addEventListener('click', login)
+loginBtn.addEventListener('click', () => {
+	
+	const loginInput = modal.querySelector('#login-control')
+	const passwordInput = modal.querySelector('#password-control')
 
-logoutBtn.addEventListener('click', logout)
+	const user = {
+		login: loginInput.value,
+		password: passwordInput.value 
+	}
+
+	localStorage.setItem('auth', JSON.stringify(user))//auth - ключ, и данные usera в виде строки JSON.stringify переводит в строку
+	login()
+})
 
 
+logoutBtn.addEventListener('click', () => {
+	localStorage.removeItem('auth')
+	logout()
+})
+
+checkAuth()
 
 
 
