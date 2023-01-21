@@ -7,16 +7,14 @@ const loginBtn = modal.querySelector('.login-btn')
 
 
 
-
+//Функции
 const openModal = () => {
-	// modal.style.display = 'block'//через CSS стили
 	modal.classList.add('d-block') //через классы бутстрап
 
 	setTimeout(() => {
 		modal.classList.add('show')
 	}, 100)
 }
-
 
 const closeModal = () => {
 	modal.classList.remove('show')
@@ -26,15 +24,15 @@ const closeModal = () => {
 }
 
 const login = () => {
-	authBtn.style.display = 'none'
+	authBtn.classList.add('d-none')
 	openCartBtn.classList.remove('d-none')
 	logoutBtn.classList.remove('d-none')
-	// openCartBtn.style.display = 'block'
-	// logoutBtn.style.display = 'block'
-
+	closeModal()
 }
 const logout = () => {
-	console.log('logout');
+	authBtn.classList.remove('d-none')
+	openCartBtn.classList.add('d-none')
+	logoutBtn.classList.add('d-none')	
 }
 
 //Обработчики событий
@@ -44,20 +42,9 @@ closeBtns.forEach((btn) => {
 	btn.addEventListener('click', closeModal)
 })
 
-loginBtn.addEventListener('click', () => {
-	login()
-})
+loginBtn.addEventListener('click', login)
 
-
-// closeBtns.forEach((btn) => {
-// 	btn.addEventListener('click', () =>{
-// 		closeModal()
-// 	})
-// })
-
-// for (let i=0; i < closeBtns.length; i++){
-// 	console.log(closeBtns[i]);
-// }
+logoutBtn.addEventListener('click', logout)
 
 
 
