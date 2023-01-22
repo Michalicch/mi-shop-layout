@@ -10,7 +10,8 @@ const loginBtn = modal.querySelector('.login-btn')
 //Функции
 const openModal = () => {
 	modal.classList.add('d-block') //через классы бутстрап
-
+	document.getElementById('password-control').type = 'password'//звездочки в пароле
+	
 	setTimeout(() => {
 		modal.classList.add('show')
 	}, 100)
@@ -53,14 +54,31 @@ loginBtn.addEventListener('click', () => {
 	
 	const loginInput = modal.querySelector('#login-control')
 	const passwordInput = modal.querySelector('#password-control')
-
+	
 	const user = {
 		login: loginInput.value,
 		password: passwordInput.value 
 	}
+	if (loginInput.value != 0 && passwordInput.value != 0) {
+		localStorage.setItem('auth', JSON.stringify(user))//auth - ключ, и данные usera в виде строки JSON.stringify переводит в строку
+		login()	
+		}else {
+			alert("Вход не возможен! Авторизируйтесь!")
+		}
+	
 
-	localStorage.setItem('auth', JSON.stringify(user))//auth - ключ, и данные usera в виде строки JSON.stringify переводит в строку
-	login()
+
+//копия
+	// const loginInput = modal.querySelector('#login-control')
+	// const passwordInput = modal.querySelector('#password-control')
+
+	// const user = {
+	// 	login: loginInput.value,
+	// 	password: passwordInput.value 
+	// }
+
+	// localStorage.setItem('auth', JSON.stringify(user))//auth - ключ, и данные usera в виде строки JSON.stringify переводит в строку
+	// login()
 })
 
 
