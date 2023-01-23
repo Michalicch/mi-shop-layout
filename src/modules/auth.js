@@ -1,5 +1,5 @@
 import { openModal, closeModal } from "./modals";
-
+import { getData } from "./api"
 
 export const authFunc = () => {
 	const authBtn = document.getElementById("open-auth-btn");
@@ -24,9 +24,22 @@ export const authFunc = () => {
 		logoutBtn.classList.add("d-none");
 	};
 	const checkAuth = () => {
-		if (JSON.parse(localStorage.getItem("auth"))) {
-			login();
+		const user = JSON.parse(localStorage.getItem("auth"))
+
+		if (user) {
+			getData('/profile').then((data) => {
+
+				if ((data.login && data.login === user.login) &&
+					(data.password && data.password === user.password)) {
+					// localStorage.setItem("auth", JSON.stringify(data));
+					login();
+				}
+			})
 		}
+
+
+
+
 	};
 
 	//Обработчики событий
@@ -52,8 +65,22 @@ export const authFunc = () => {
 			login: loginInput.value,
 			password: passwordInput.value,
 		};
-		localStorage.setItem("auth", JSON.stringify(user)); //auth - ключ, и данные usera в виде строки JSON.stringify переводит в строку
-		login();
+
+		getData('/profile').then((data) => {
+
+			if ((data.login && data.login === user.login) &&
+				(data.password && data.password === user.password)) {
+				localStorage.setItem("auth", JSON.stringify(data));
+				login();
+			} else {
+				alert(' данные!');
+			}
+		})
+
+
+
+		// localStorage.setItem("auth", JSON.stringify(user)); //auth - ключ, и данные usera в виде строки JSON.stringify переводит в строку
+
 	});
 
 	logoutBtn.addEventListener("click", () => {
