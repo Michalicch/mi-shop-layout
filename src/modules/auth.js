@@ -88,9 +88,5 @@ export const authFunc = () => {
 		logout();
 	});
 
-	openCartBtn.addEventListener('click', () => {
-		openModal(cartModal)
-	})
-
 	checkAuth()
 };
