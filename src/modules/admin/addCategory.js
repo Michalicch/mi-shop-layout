@@ -56,6 +56,7 @@ export const addCategory = () => {
 		categoryData.name = nameInp.value;
 		checkValues()
 	})
+	
 	previewInp.addEventListener('input', () => {
 		const file = previewInp.files[0]
 
