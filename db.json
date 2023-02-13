@@ -59,7 +59,37 @@
       "id": 1,
       "name": "Чехольчик черный",
       "price": "240",
-      "count": 3
+      "count": 2
+    },
+    {
+      "name": "Infinix HOT 11",
+      "price": 14000,
+      "count": 1,
+      "id": 2
+    },
+    {
+      "method": "POST",
+      "body": "{\"name\":\"LeeTV CoolOne\",\"price\":7500,\"count\":1}",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": 3
+    },
+    {
+      "method": "POST",
+      "body": "{\"name\":\"LeeTV CoolOne\",\"price\":7500,\"count\":1}",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": 4
+    },
+    {
+      "method": "POST",
+      "body": "{\"name\":\"LeeTV CoolOne\",\"price\":7500,\"count\":1}",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": 5
     }
   ]
 }

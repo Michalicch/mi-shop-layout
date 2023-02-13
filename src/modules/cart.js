@@ -5,7 +5,9 @@ export const cartFunc = () => {
 	const cartModal = document.getElementById("cart-modal");
 	const closeBtns = cartModal.querySelectorAll(".close-btn");
 	const openCartBtn = document.getElementById("open-cart-btn");
-	const container = document.getElementById('cart-container')
+	const container = document.getElementById('cart-container');
+	const totalPrice = document.getElementById('cart-totlal-price');
+	
 
 	const render = (data) => {
 		container.innerHTML = ''
@@ -17,12 +19,12 @@ export const cartFunc = () => {
             ${item.name}
           </div>
           <div class="col col-12 col-md-6 fs-4 d-flex align-items-center justify-content-end flex-wrap">
-					<h4 class="me-3 d-flex align-itemns-center">${item.price} ₽</h4>
-          <button type="button" class="btn btn-outline-dark btn-sm cart-item-controls" id="control-dec" data-id="${item.id}" data-name="${item.name}" data-price="${item.price}" data-count="${item.count}">
+					<h4 class="me-3 d-flex align-itemns-center">${item.price} ք</h4>
+          <button type="button" class="btn btn-outline-dark btn-sm cart-item-controls" id="control-dec" data-id="${item.id}" data-count="${item.count}">
               -
           </button>
           <h6 class="cart-item-count me-3 ms-3">${item.count}</h6>
-          <button type="button" class="btn btn-outline-dark btn-sm cart-item-controls" id="control-inc" data-id="${item.id}" data-name="${item.name}" data-price="${item.price}" data-count="${item.count}">
+          <button type="button" class="btn btn-outline-dark btn-sm cart-item-controls" id="control-inc" data-id="${item.id}" data-count="${item.count}">
               +
           </button>
           </div>
@@ -34,11 +36,22 @@ export const cartFunc = () => {
 	const updateCart = () => {
 		getData('/cart')
 			.then((data) => {
-				render(data);				
+				render(data);	
+				updateTotelCart(data);			
 			})
 			.catch((error) => {
 				console.error('Это ошибка бро');
 			})
+	}
+
+	const updateTotelCart = (data) => {
+		let total = 0;
+
+		data.forEach(item => {
+			total += (Number(item.price) * Number(item.count))
+		})
+
+		totalPrice.textContent = total + ' ք'
 	}
 
 	openCartBtn.addEventListener('click', () => {

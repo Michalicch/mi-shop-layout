@@ -52,7 +52,7 @@ export const productsFunc = () => {
 				.catch((error) => {
 					console.error('Это ошибка бро');
 				})
-			
+			console.log(id);
 		} 
 	})
 

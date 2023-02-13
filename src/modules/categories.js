@@ -2,8 +2,11 @@ import { getData } from "./api";
 
 export const categoriesFunc = () => {
 	const container = document.getElementById('categories-container')
+	const catalogSearch = document.querySelector('.catalog-search')
 
 	const render = (data) => {
+		container.innerHTML = '' 
+
 		data.forEach((item) => {
 			container.insertAdjacentHTML(
 				"beforeend",
@@ -22,6 +25,16 @@ export const categoriesFunc = () => {
 			);
 		})
 	}
+
+	catalogSearch.addEventListener('input', (event) => {		
+		getData(`/categories?q=${event.target.value}`)
+			.then((data) => {
+				render(data);
+			})
+			.catch((error) => {
+				console.error('Это ошибка бро');
+			})
+	})
 
 	getData('/categories')
 		.then((data) => {
