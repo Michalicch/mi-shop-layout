@@ -1,4 +1,4 @@
-import { getData } from "./api"
+import { getData, putData } from "./api"
 import { openModal, closeModal } from "./modals";
 
 export const cartFunc = () => {
@@ -17,12 +17,12 @@ export const cartFunc = () => {
             ${item.name}
           </div>
           <div class="col col-12 col-md-6 fs-4 d-flex align-items-center justify-content-end flex-wrap">
-					<h4 class="me-3 d-flex align-itemns-center">${item.price * item.count} ₽</h4>
-          <button type="button" class="btn btn-outline-dark btn-sm cart-item-controls" id="control-dec">
+					<h4 class="me-3 d-flex align-itemns-center">${item.price} ₽</h4>
+          <button type="button" class="btn btn-outline-dark btn-sm cart-item-controls" id="control-dec" data-id="${item.id}" data-name="${item.name}" data-price="${item.price}" data-count="${item.count}">
               -
           </button>
-          <h6 class="cart-item-count me-3 ms-3">1</h6>
-          <button type="button" class="btn btn-outline-dark btn-sm cart-item-controls" id="control-inc">
+          <h6 class="cart-item-count me-3 ms-3">${item.count}</h6>
+          <button type="button" class="btn btn-outline-dark btn-sm cart-item-controls" id="control-inc" data-id="${item.id}" data-name="${item.name}" data-price="${item.price}" data-count="${item.count}">
               +
           </button>
           </div>
@@ -31,18 +31,19 @@ export const cartFunc = () => {
 		})
 	}
 
-
-
-	openCartBtn.addEventListener('click', () => {
-
+	const updateCart = () => {
 		getData('/cart')
 			.then((data) => {
-				render(data);
-				openModal(cartModal)
+				render(data);				
 			})
 			.catch((error) => {
 				console.error('Это ошибка бро');
 			})
+	}
+
+	openCartBtn.addEventListener('click', () => {
+		updateCart()
+		openModal(cartModal)		
 	})
 
 	closeBtns.forEach((btn) => {
@@ -50,5 +51,44 @@ export const cartFunc = () => {
 			closeModal(cartModal)
 		});
 	});
+
+	container.addEventListener('click', (event) => {
+		if(event.target.closest('button')) {
+			if(event.target.id && event.target.id === 'control-inc'){
+				const id = event.target.dataset.id
+				const name = event.target.dataset.name
+				const price = event.target.dataset.price
+				const count = Number(event.target.dataset.count)
+
+				const item = {
+					id: id,
+					name: name,
+					price: price,
+					count: count + 1
+				}
+
+				putData(`/cart/${id}`, item).then(() => {
+					updateCart()
+				})
+			}else if(event.target.id && event.target.id === 'control-dec'){
+				const id = event.target.dataset.id
+				const name = event.target.dataset.name
+				const price = event.target.dataset.price
+				const count = Number(event.target.dataset.count)
+
+				if(count > 0) {
+					const item = {
+						id: id,
+						name: name,
+						price: price,
+						count: count - 1
+					}
+					putData(`/cart/${id}`, item).then(() => {
+						updateCart()
+					})
+				}				
+			}			
+		} 
+	})
 
 }

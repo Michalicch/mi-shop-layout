@@ -105,13 +105,7 @@ export const addProduct = () => {
 	})
 
 	saveBtn.addEventListener('click', () => {
-		postData('/products', {
-			method: 'POST',
-			body: JSON.stringify(productData),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).then(() => {
+		postData('/products', productData).then(() => {
 			nameInp.value = ''
 			titleInp.value = ''
 			priceInp.value = ''
@@ -129,7 +123,7 @@ export const addProduct = () => {
 			})
 		}
 	})
-	// Amazfit GTS 4 mini (черный)
+	
 
 	updateTable()
 	checkValues()
