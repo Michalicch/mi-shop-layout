@@ -1,4 +1,4 @@
-import { getData, putData } from "./api"
+import { getData, putData, patchData } from "./api"
 import { openModal, closeModal } from "./modals";
 
 export const cartFunc = () => {
@@ -55,35 +55,25 @@ export const cartFunc = () => {
 	container.addEventListener('click', (event) => {
 		if(event.target.closest('button')) {
 			if(event.target.id && event.target.id === 'control-inc'){
-				const id = event.target.dataset.id
-				const name = event.target.dataset.name
-				const price = event.target.dataset.price
+				const id = event.target.dataset.id				
 				const count = Number(event.target.dataset.count)
 
-				const item = {
-					id: id,
-					name: name,
-					price: price,
+				const item = {					
 					count: count + 1
 				}
 
-				putData(`/cart/${id}`, item).then(() => {
+				patchData(`/cart/${id}`, item).then(() => {
 					updateCart()
 				})
 			}else if(event.target.id && event.target.id === 'control-dec'){
-				const id = event.target.dataset.id
-				const name = event.target.dataset.name
-				const price = event.target.dataset.price
+				const id = event.target.dataset.id				
 				const count = Number(event.target.dataset.count)
 
 				if(count > 0) {
-					const item = {
-						id: id,
-						name: name,
-						price: price,
+					const item = {						
 						count: count - 1
 					}
-					putData(`/cart/${id}`, item).then(() => {
+					patchData(`/cart/${id}`, item).then(() => {
 						updateCart()
 					})
 				}				
